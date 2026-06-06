@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://pff56k7ufmqy"]
+
+[ext_resource type="Script" uid="uid://b6lrykp0kxjud" path="res://main.gd" id="1_272bh"]
+[ext_resource type="ArrayMesh" uid="uid://dnmhetf4thvm7" path="res://models/Box_实体1.res" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bccr0mf0gn0tt" path="res://scripts/box.gd" id="1_lquwl"]
+[ext_resource type="BoxMesh" uid="uid://c2g8q4d2qeg3v" path="res://models/fan.tres" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://bvpdny4kvgaaw" path="res://scripts/part.gd" id="2_h2yge"]
+[ext_resource type="Material" uid="uid://cut5evjfg7qqs" path="res://materials/mask.tres" id="3_1bvp3"]
+[ext_resource type="StyleBox" uid="uid://b65bsyg37w6dn" path="res://materials/ui_bg.tres" id="6_7mycd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 3
+glow_enabled = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_h2yge"]
+data = PackedVector3Array(-0.5, 0.5, 0.099999994, 0.5, 0.5, 0.099999994, -0.5, -0.5, 0.099999994, 0.5, 0.5, 0.099999994, 0.5, -0.5, 0.099999994, -0.5, -0.5, 0.099999994, 0.5, 0.5, -0.099999994, -0.5, 0.5, -0.099999994, 0.5, -0.5, -0.099999994, -0.5, 0.5, -0.099999994, -0.5, -0.5, -0.099999994, 0.5, -0.5, -0.099999994, 0.5, 0.5, 0.099999994, 0.5, 0.5, -0.099999994, 0.5, -0.5, 0.099999994, 0.5, 0.5, -0.099999994, 0.5, -0.5, -0.099999994, 0.5, -0.5, 0.099999994, -0.5, 0.5, -0.099999994, -0.5, 0.5, 0.099999994, -0.5, -0.5, -0.099999994, -0.5, 0.5, 0.099999994, -0.5, -0.5, 0.099999994, -0.5, -0.5, -0.099999994, 0.5, 0.5, 0.099999994, -0.5, 0.5, 0.099999994, 0.5, 0.5, -0.099999994, -0.5, 0.5, 0.099999994, -0.5, 0.5, -0.099999994, 0.5, 0.5, -0.099999994, -0.5, -0.5, 0.099999994, 0.5, -0.5, 0.099999994, -0.5, -0.5, -0.099999994, 0.5, -0.5, 0.099999994, 0.5, -0.5, -0.099999994, -0.5, -0.5, -0.099999994)
+
+[node name="Node3D" type="Node3D" unique_id=1165852400]
+script = ExtResource("1_272bh")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=370592599]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2027237918]
+transform = Transform3D(0.085996516, -0.31298146, 0.94585794, 0.028339097, 0.94975924, 0.31169584, -0.99589235, 3.709988e-09, 0.0905456, 11.131836, 14.048462, 6.0234375)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1077187468]
+transform = Transform3D(0.55705136, -0.20650211, 0.8043946, 0, 0.9685922, 0.24865453, -0.830478, -0.13851334, 0.53955567, 5.3641725, 6.668592, 3.0935059)
+visible = false
+projection = 1
+size = 13.085
+
+[node name="Box" type="Node3D" parent="." unique_id=1810571824]
+script = ExtResource("1_lquwl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Box" unique_id=1329668978]
+mesh = ExtResource("1_ig7tw")
+
+[node name="FanPart" type="Area3D" parent="Box" unique_id=501686259 node_paths=PackedStringArray("panel")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4709778, 7.7772827, 3.0784302)
+script = ExtResource("2_h2yge")
+mask = ExtResource("3_1bvp3")
+panel = NodePath("../../CanvasLayer/FanPanel")
+
+[node name="FanPartMesh" type="MeshInstance3D" parent="Box/FanPart" unique_id=381201292]
+mesh = ExtResource("2_0xm2m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box/FanPart" unique_id=297645222]
+shape = SubResource("ConcavePolygonShape3D_h2yge")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1701985884]
+
+[node name="FanPanel" type="PanelContainer" parent="CanvasLayer" unique_id=1468861007]
+visible = false
+offset_top = 27.0
+offset_bottom = 27.0
+theme_override_styles/panel = ExtResource("6_7mycd")
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/FanPanel" unique_id=1348660772]
+layout_mode = 2
+columns = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/FanPanel/GridContainer" unique_id=1964276736]
+layout_mode = 2
+color = Color(0.050980393, 0.14509805, 0.34901962, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer/FanPanel/GridContainer" unique_id=965356861]
+layout_mode = 2
+text = "Fan"
+
+[connection signal="clear" from="." to="Box/FanPart" method="_on_node_3d_clear"]
+[connection signal="input_event" from="Box/FanPart" to="Box/FanPart" method="_on_input_event"]
